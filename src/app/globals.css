@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 44 41% 95%; /* Warm Ivory: #F5F1E8 approx */
+    --foreground: 220 10% 15%; /* Deep Charcoal: #22252A approx */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 15%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 15%;
+    
+    --primary: 220 10% 15%; /* Deep Charcoal */
+    --primary-foreground: 44 41% 95%;
+    
+    --secondary: 44 15% 85%; /* Natural Stone approx */
+    --secondary-foreground: 220 10% 15%;
+    
+    --muted: 44 15% 90%;
+    --muted-foreground: 220 5% 40%;
+    
+    --accent: 30 25% 45%; /* Warm Bronze approx */
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 44 15% 85%;
+    --input: 44 15% 85%;
+    --ring: 220 10% 15%;
+
+    --radius: 0.25rem;
+  }
+
+  .dark {
+    --background: 220 10% 15%; /* Deep Charcoal */
+    --foreground: 44 41% 95%; /* Warm Ivory */
+    
+    --card: 220 10% 12%;
+    --card-foreground: 44 41% 95%;
+    
+    --popover: 220 10% 12%;
+    --popover-foreground: 44 41% 95%;
+    
+    --primary: 44 41% 95%;
+    --primary-foreground: 220 10% 15%;
+    
+    --secondary: 220 5% 25%;
+    --secondary-foreground: 44 41% 95%;
+    
+    --muted: 220 5% 25%;
+    --muted-foreground: 220 10% 70%;
+    
+    --accent: 30 25% 45%; /* Warm Bronze */
+    --accent-foreground: 44 41% 95%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 220 5% 25%;
+    --input: 220 5% 25%;
+    --ring: 44 41% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+}
