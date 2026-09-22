@@ -3,12 +3,10 @@ export const siteConfig = {
   description: "Premium architectural flooring, wall, window, and exterior surface solutions.",
   companyName: "Spacesio Beryl",
   navigation: [
+    { name: "Home", href: "/" },
     { name: "Collection", href: "/collection" },
-    { name: "Products", href: "/products" },
     { name: "Projects", href: "/projects" },
-    { name: "Solutions", href: "/solutions" },
     { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
     { name: "Visualizer", href: "/visualizer" },
   ],
   socialLinks: {
