@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 
 // Dynamically import below-the-fold sections to reduce initial JS payload
 const MaterialsSection = dynamic(() => import("@/components/sections/MaterialsSection").then(mod => mod.MaterialsSection));
-const VisualizerTeaserSection = dynamic(() => import("@/components/sections/VisualizerTeaserSection").then(mod => mod.VisualizerTeaserSection));
+// const VisualizerTeaserSection = dynamic(() => import("@/components/sections/VisualizerTeaserSection").then(mod => mod.VisualizerTeaserSection));
 const FinalCTASection = dynamic(() => import("@/components/sections/FinalCTASection").then(mod => mod.FinalCTASection));
 
 export default function Home() {
@@ -39,7 +39,7 @@ export default function Home() {
       />
       <HeroSection />
       <MaterialsSection />
-      <VisualizerTeaserSection />
+      {/* <VisualizerTeaserSection /> */}
       <FinalCTASection />
       
       {/* Global Homepage Scroll Hint */}
