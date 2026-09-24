@@ -7,6 +7,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import FoldText from "@/components/reactbits/FoldText";
 import { Magnetic } from "@/components/ui/magnetic";
+import BoxLoader from "@/components/ui/box-loader";
 import { getLenis } from "@/hooks/useLenis";
 
 const slides = [
@@ -42,6 +43,7 @@ export function HeroSection() {
   // Only slide 1's image loads eagerly. The rest mount once the browser is
   // idle so they don't compete with the LCP image for bandwidth on first load.
   const [mountedCount, setMountedCount] = useState(1);
+  const [heroLoaded, setHeroLoaded] = useState(false);
 
   useEffect(() => {
     const hasIdleCallback = typeof window.requestIdleCallback === "function";
@@ -170,10 +172,24 @@ export function HeroSection() {
               className={`hero-bg-image object-cover object-center transition-transform duration-[10s] ease-linear scale-105`}
               style={{ opacity: idx === 0 ? 1 : 0 }}
               sizes="100vw"
+              onLoad={idx === 0 ? () => setHeroLoaded(true) : undefined}
             />
           ))}
           {/* Global Gradient Overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent pointer-events-none"></div>
+        </div>
+
+        {/* Loading overlay, shown until the first hero image has downloaded */}
+        <div
+          aria-hidden={heroLoaded}
+          className={`absolute inset-0 z-30 flex flex-col items-center justify-center gap-6 bg-black transition-opacity duration-700 ease-out ${
+            heroLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          <BoxLoader />
+          <span className="font-serif text-white/80 text-xs md:text-sm tracking-[0.35em] uppercase">
+            Spacesio
+          </span>
         </div>
 
         {/* Content Container */}

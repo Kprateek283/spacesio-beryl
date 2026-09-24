@@ -92,3 +92,59 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+/* Box loader (see src/components/ui/box-loader.tsx) */
+.boxes {
+  --size: 22px;
+  height: calc(var(--size) * 2);
+  width: calc(var(--size) * 3);
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  transform: rotateX(60deg) rotateZ(45deg);
+}
+
+.boxes .box {
+  width: var(--size);
+  height: var(--size);
+  top: 0;
+  left: 0;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.boxes .box-1 { transform: translate(100%, 0); @apply animate-box1; }
+.boxes .box-2 { transform: translate(0, 100%); @apply animate-box2; }
+.boxes .box-3 { transform: translate(100%, 100%); @apply animate-box3; }
+.boxes .box-4 { transform: translate(200%, 0); @apply animate-box4; }
+
+.boxes .face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.boxes .face-front {
+  @apply bg-neutral-300;
+  top: 0;
+  left: 0;
+  transform: translateZ(calc(var(--size) / 2));
+}
+
+.boxes .face-right {
+  @apply bg-neutral-400;
+  right: 0;
+  transform: rotateY(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.boxes .face-top {
+  @apply bg-white;
+  transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.boxes .face-back {
+  @apply bg-neutral-500;
+  top: 0;
+  left: 0;
+  transform: translateZ(calc(var(--size) * -3 / 2));
+}

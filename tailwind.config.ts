@@ -54,6 +54,10 @@ const config: Config = {
       },
       animation: {
         shimmer: "shimmer 8s infinite",
+        box1: "box1 1.2s linear infinite",
+        box2: "box2 1.2s linear infinite",
+        box3: "box3 1.2s linear infinite",
+        box4: "box4 1.2s linear infinite",
       },
       keyframes: {
         shimmer: {
@@ -63,6 +67,24 @@ const config: Config = {
           "30%, 60%": {
             "background-position": "calc(100% + var(--shimmer-width)) 0",
           },
+        },
+        box1: {
+          "0%, 50%": { transform: "translate(100%, 0)" },
+          "100%": { transform: "translate(200%, 0)" },
+        },
+        box2: {
+          "0%": { transform: "translate(0, 100%)" },
+          "50%": { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(100%, 0)" },
+        },
+        box3: {
+          "0%, 50%": { transform: "translate(100%, 100%)" },
+          "100%": { transform: "translate(0, 100%)" },
+        },
+        box4: {
+          "0%": { transform: "translate(200%, 0)" },
+          "50%": { transform: "translate(200%, 100%)" },
+          "100%": { transform: "translate(100%, 100%)" },
         },
       },
     },
