@@ -7,7 +7,7 @@ export const siteConfig = {
     { name: "Collection", href: "/collection" },
     { name: "Projects", href: "/projects" },
     { name: "About", href: "/about" },
-    { name: "Visualizer", href: "/visualizer" },
+    // { name: "Visualizer", href: "/visualizer" },
   ],
   socialLinks: {
     instagram: "https://instagram.com/spacesio-beryl-placeholder",
