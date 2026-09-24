@@ -2,12 +2,6 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-    ],
   },
   async headers() {
     return [
@@ -29,16 +23,6 @@ const nextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
-          }
-        ],
-      },
-      {
-        // Exception for Sanity Studio iframe compatibility
-        source: '/studio/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
           }
         ],
       }
