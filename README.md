@@ -42,8 +42,7 @@ npm run start
 1. UI implementation
 2. Collection
 3. Product pages
-4. CMS Integration (Sanity)
-5. 3D showroom
-6. Visualizer
-7. Performance optimization
-8. Production deployment
+4. 3D showroom
+5. Visualizer
+6. Performance optimization
+7. Production deployment
