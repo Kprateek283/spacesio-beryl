@@ -24,7 +24,15 @@ Set these in **Vercel → Project → Settings → Environment Variables** (Prod
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | `abc123...` | Only if you verify Search Console with the "HTML tag" method |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | `G-XXXXXXX` | Google Analytics 4. Loaded only after a visitor accepts analytics cookies |
 
-> **Important:** without `RESEND_API_KEY` in production, the contact form shows visitors an error ("We couldn't send your enquiry…") instead of silently losing the enquiry. Set up Resend **before** deploying.
+> **Temporary mode (Resend not set up yet):** the site deploys and works without Resend, Upstash or Search Console.
+> - **Contact form:** submissions succeed for the visitor, but are **not emailed**. Each enquiry is written to the server log instead: **Vercel → Project → Logs**, search `[LeadService]`. Vercel keeps runtime logs only for a limited time, so check them regularly.
+> - **Newsletter:** hidden from the footer.
+> - **Rate limiting:** in-memory only (works, but weaker).
+>
+> **When Resend is set up, re-enable the strict behaviour:**
+> 1. In `src/lib/services/leadService.ts`, uncomment the `if (process.env.NODE_ENV === "production") { throw … }` block (marked `TEMPORARY`).
+> 2. In `src/components/layout/Footer.tsx`, uncomment the `NewsletterForm` import and the "Newsletter" column (marked `TEMPORARY`).
+> 3. In `__tests__/lead-service.test.ts`, change the "logs the enquiry" test back to expect a `RESEND_API_KEY` error.
 
 ---
 

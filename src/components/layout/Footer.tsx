@@ -5,7 +5,10 @@ import { CurrentYear } from "@/components/ui/current-year";
 import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { NewsletterForm } from "@/components/layout/NewsletterForm";
+// TEMPORARY: newsletter hidden until Resend is set up (needs RESEND_API_KEY +
+// RESEND_AUDIENCE_ID, see docs/SETUP.md §2.4). Uncomment this import and the
+// "Newsletter" column below to bring it back.
+// import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
 const isRealLink = (url: string) => !url.includes("placeholder");
 
@@ -81,11 +84,13 @@ export function Footer() {
               </ul>
             </div>
 
+            {/* TEMPORARY: hidden until Resend is configured (see import note above).
             <div className="col-span-2 md:col-span-2 lg:col-span-3">
               <h4 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Newsletter</h4>
               <p className="text-sm text-neutral-400 mb-4">Stay updated with our latest architectural releases and editorial insights.</p>
               <NewsletterForm />
             </div>
+            */}
             
           </div>
 
