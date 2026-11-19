@@ -98,7 +98,7 @@ export function NewsletterForm() {
       >
         {message}
       </p>
-      <p className="text-[11px] leading-relaxed text-neutral-500">
+      <p className="text-[11px] leading-relaxed text-neutral-400">
         By subscribing you agree to receive occasional emails from us. See our{" "}
         <Link href="/privacy" className="underline underline-offset-2 hover:text-white">
           Privacy Policy

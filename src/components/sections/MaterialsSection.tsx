@@ -315,7 +315,7 @@ export function MaterialsSection() {
 
                   {/* Finishes at the bottom */}
                   <div className="mt-12 md:mt-16">
-                    <p className="mb-6 text-sm font-bold uppercase tracking-widest opacity-60">Finishes</p>
+                    <p className="mb-6 text-sm font-bold uppercase tracking-widest opacity-80">Finishes</p>
                     <ul className="grid grid-cols-2 gap-y-4 gap-x-6">
                       {cat.list.map((item, i) => (
                         <li key={i} className="text-sm md:text-base font-bold uppercase tracking-widest border-l-2 border-current pl-4">

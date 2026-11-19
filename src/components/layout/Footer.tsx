@@ -65,7 +65,7 @@ export function Footer() {
 
             {/* Links */}
             <div className="col-span-1 md:col-span-1 lg:col-span-2">
-              <h4 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Collection</h4>
+              <h2 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Collection</h2>
               <ul className="space-y-2 lg:space-y-4 text-sm text-neutral-400 font-medium [&_a]:inline-block [&_a]:py-1.5 lg:[&_a]:py-0">
                 <li><Link href="/collection/flooring" className="hover:text-white transition-colors">Flooring</Link></li>
                 <li><Link href="/collection/wall" className="hover:text-white transition-colors">Wall Coverings</Link></li>
@@ -75,7 +75,7 @@ export function Footer() {
             </div>
 
             <div className="col-span-1 md:col-span-1 lg:col-span-2">
-              <h4 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Company</h4>
+              <h2 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Company</h2>
               <ul className="space-y-2 lg:space-y-4 text-sm text-neutral-400 font-medium [&_a]:inline-block [&_a]:py-1.5 lg:[&_a]:py-0">
                 <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
                 <li><Link href="/projects" className="hover:text-white transition-colors">Case Studies</Link></li>
@@ -86,7 +86,7 @@ export function Footer() {
 
             {/* TEMPORARY: hidden until Resend is configured (see import note above).
             <div className="col-span-2 md:col-span-2 lg:col-span-3">
-              <h4 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Newsletter</h4>
+              <h2 className="font-bold text-white uppercase tracking-widest text-xs mb-6">Newsletter</h2>
               <p className="text-sm text-neutral-400 mb-4">Stay updated with our latest architectural releases and editorial insights.</p>
               <NewsletterForm />
             </div>
@@ -94,7 +94,7 @@ export function Footer() {
             
           </div>
 
-          <div className="pt-8 border-t border-neutral-800 flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-5 text-xs text-neutral-500 font-medium uppercase tracking-widest">
+          <div className="pt-8 border-t border-neutral-800 flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-5 text-xs text-neutral-400 font-medium uppercase tracking-widest">
             <p>© <CurrentYear /> {siteConfig.name}. All rights reserved.</p>
             <div className="flex flex-wrap gap-x-6 gap-y-2">
               <Link href="/privacy" className="py-2 hover:text-white transition-colors">Privacy</Link>
