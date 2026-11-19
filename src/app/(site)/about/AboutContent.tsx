@@ -137,7 +137,7 @@ export function AboutContent() {
              </div>
           </div>
           <div className="w-full lg:w-[55%] order-1 lg:order-2">
-             <div className="relative w-full aspect-[16/10] bg-muted overflow-hidden reveal-image">
+             <div className="relative w-full aspect-[16/10] bg-muted dark:bg-black overflow-hidden reveal-image">
                 <Image
                    src="/assets/images/landing/interior-reveal.jpg"
                    alt="Spacesio Beryl Architectural Interior"

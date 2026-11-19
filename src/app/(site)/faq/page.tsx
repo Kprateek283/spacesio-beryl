@@ -4,7 +4,8 @@ import { getFaqs } from "@/lib/api/faqs";
 import { Faq } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: "FAQ | Spacesio Beryl",
+  title: "FAQ",
+  alternates: { canonical: "/faq" },
   description: "Answers to common questions about ordering, samples, installation, and more.",
 };
 

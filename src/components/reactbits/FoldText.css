@@ -99,3 +99,14 @@
     opacity: 0 !important;
   }
 }
+
+/* After the intro finishes: no permanent GPU layers or blend pseudo-elements. */
+.fold-text-done .fold-text-segment,
+.fold-text-done .fold-text-piece {
+  transform-style: flat;
+  will-change: auto;
+}
+
+.fold-text-done .fold-text-piece::after {
+  display: none;
+}

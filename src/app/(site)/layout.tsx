@@ -5,6 +5,9 @@ import "../globals.css";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { CookieConsent } from "@/components/consent/CookieConsent";
+import { ConsentScripts } from "@/components/consent/ConsentScripts";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 
 const manrope = Manrope({
   weight: ["300", "400", "500", "600", "700"],
@@ -21,13 +24,66 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  keywords: [
+    "Spacesio Beryl",
+    "Spacesio",
+    "premium flooring",
+    "wall coverings",
+    "architectural surfaces",
+    "wooden flooring",
+    "wallpaper",
+    "window blinds",
+    "exterior decking",
+  ],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    locale: "en_US",
+    images: [
+      {
+        url: "/assets/images/landing/hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/assets/images/landing/hero.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  // Paste the Google Search Console HTML-tag token into this env var to verify ownership.
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   icons: {
     icon: "/favicon.ico",
+    apple: "/assets/icons/logo.png",
   },
 };
 
@@ -49,6 +105,9 @@ export default function RootLayout({
             </main>
             <Footer />
           </SmoothScroll>
+          <WhatsAppButton />
+          <CookieConsent />
+          <ConsentScripts />
         </ThemeProvider>
       </body>
     </html>

@@ -96,7 +96,7 @@ export function ProjectDetailContent({
             </Link>
           ) : <div />}
 
-          <Link href="/projects" className="text-xs font-medium tracking-widest uppercase border-b border-foreground hover:text-accent hover:border-accent transition-colors">
+          <Link href="/projects" className="relative after:absolute after:-inset-y-3 after:inset-x-0 after:content-[''] text-xs font-medium tracking-widest uppercase border-b border-foreground hover:text-accent hover:border-accent transition-colors">
             View All Projects →
           </Link>
 

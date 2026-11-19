@@ -15,12 +15,12 @@ export async function generateMetadata(
   const product = await getProductBySlug(params.product);
   
   if (!product) {
-    return { title: 'Product Not Found | Spacesio Beryl' };
+    return { title: 'Product Not Found', robots: { index: false } };
   }
 
-  const title = `${product.name} | Spacesio Beryl`;
+  const title = product.name;
   const description = product.shortDescription || `${product.name}, a premium ${product.subcategory || product.category} material by Spacesio Beryl.`;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://spacesioberyl.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.spacesioberyl.com';
 
   return {
     title,
@@ -29,7 +29,7 @@ export async function generateMetadata(
       canonical: `${baseUrl}/collection/${params.category}/${params.product}`,
     },
     openGraph: {
-      title,
+      title: `${title} | Spacesio Beryl`,
       description,
       url: `${baseUrl}/collection/${params.category}/${params.product}`,
       images: [
@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: Props) {
   }
 
   const related = await getRelatedProducts(product);
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://spacesioberyl.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.spacesioberyl.com';
 
   const jsonLd = {
     "@context": "https://schema.org",
