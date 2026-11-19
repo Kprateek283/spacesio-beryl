@@ -31,9 +31,10 @@ export function ClientCollectionGrid({ initialProducts }: ClientCollectionGridPr
           <input
             type="text"
             placeholder="Search materials..."
+            aria-label="Search materials"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-transparent border-b border-border focus:border-foreground outline-none transition-colors text-sm tracking-widest placeholder:text-muted-foreground uppercase font-medium"
+            className="w-full pl-10 pr-4 py-3 bg-transparent border-b border-border focus:border-foreground outline-none transition-colors text-base lg:text-sm tracking-widest placeholder:text-muted-foreground uppercase font-medium"
           />
         </div>
         <div className="text-xs tracking-widest uppercase text-muted-foreground">

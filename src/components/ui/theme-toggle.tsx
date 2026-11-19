@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 export function ThemeToggle({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -17,7 +17,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     return <div className={cn("w-10 h-10 rounded-full border border-current/20", className)} />;
   }
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
@@ -26,7 +26,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         "relative w-10 h-10 rounded-full border border-current/20 flex items-center justify-center overflow-hidden transition-all duration-500 hover:border-current/50 focus:outline-none group",
         className
       )}
-      aria-label="Toggle theme"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       <div className="relative w-full h-full flex items-center justify-center text-current">
         <Sun 

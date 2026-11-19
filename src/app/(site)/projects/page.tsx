@@ -3,7 +3,8 @@ import { ProjectFullBleedList } from "@/components/projects/ProjectFullBleedList
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projects | Spacesio Beryl",
+  title: "Projects",
+  alternates: { canonical: "/projects" },
   description: "Spaces shaped by materials, precision and purpose.",
 };
 

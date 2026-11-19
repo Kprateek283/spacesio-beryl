@@ -36,32 +36,35 @@
   }
 
   .dark {
-    --background: 220 10% 15%; /* Deep Charcoal */
+    /* Pure black dark mode (no charcoal/grey surfaces) */
+    --background: 0 0% 0%; /* Black */
     --foreground: 44 41% 95%; /* Warm Ivory */
-    
-    --card: 220 10% 12%;
+
+    --card: 0 0% 0%;
     --card-foreground: 44 41% 95%;
-    
-    --popover: 220 10% 12%;
+
+    --popover: 0 0% 0%;
     --popover-foreground: 44 41% 95%;
-    
+
     --primary: 44 41% 95%;
-    --primary-foreground: 220 10% 15%;
-    
-    --secondary: 220 5% 25%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 6%;
     --secondary-foreground: 44 41% 95%;
-    
-    --muted: 220 5% 25%;
-    --muted-foreground: 220 10% 70%;
-    
+
+    /* Placeholder / panel surfaces: barely lifted from black */
+    --muted: 0 0% 6%;
+    --muted-foreground: 0 0% 68%;
+
     --accent: 30 25% 45%; /* Warm Bronze */
     --accent-foreground: 44 41% 95%;
-    
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    
-    --border: 220 5% 25%;
-    --input: 220 5% 25%;
+
+    /* Hairlines stay visible on black */
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 44 41% 95%;
   }
 }
@@ -147,4 +150,15 @@
   top: 0;
   left: 0;
   transform: translateZ(calc(var(--size) * -3 / 2));
+}
+
+@layer utilities {
+  /* Keeps the black & yellow logo visible on dark backgrounds by tracing a
+     thin white outline around it, instead of recolouring the mark. */
+  .logo-outline {
+    filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.85))
+      drop-shadow(-1px -1px 0 rgba(255, 255, 255, 0.85))
+      drop-shadow(1px -1px 0 rgba(255, 255, 255, 0.85))
+      drop-shadow(-1px 1px 0 rgba(255, 255, 255, 0.85));
+  }
 }

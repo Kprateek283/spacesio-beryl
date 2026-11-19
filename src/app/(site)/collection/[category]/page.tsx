@@ -16,11 +16,12 @@ export async function generateMetadata({ params }: { params: { category: string 
   const currentCat = categories.find(c => c.slug === params.category);
   
   if (!currentCat) {
-    return { title: 'Category Not Found | Spacesio Beryl' };
+    return { title: 'Category Not Found', robots: { index: false } };
   }
 
   return {
-    title: `${currentCat.name} Collection | Spacesio Beryl`,
+    title: `${currentCat.name} Collection`,
+    alternates: { canonical: `/collection/${currentCat.slug}` },
     description: currentCat.description || `Explore our premium collection of ${currentCat.name.toLowerCase()} for luxury architectural spaces.`,
   };
 }

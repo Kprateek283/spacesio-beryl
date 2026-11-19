@@ -4,7 +4,8 @@ import { ClientCollectionGrid } from "@/components/collection/ClientCollectionGr
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Material Collection | Spacesio Beryl",
+  title: "Material Collection",
+  alternates: { canonical: "/collection" },
   description: "Explore our premium collection of flooring, wall coverings, and architectural surfaces designed for exceptional luxury spaces.",
 };
 

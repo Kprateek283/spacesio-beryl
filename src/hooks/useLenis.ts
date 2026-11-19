@@ -18,8 +18,9 @@ function ensureLenis(): Lenis | null {
   gsap.registerPlugin(ScrollTrigger);
 
   const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    // lerp (per-frame interpolation) tracks input closely; a fixed duration
+    // made every scroll trail ~1.2s behind the wheel.
+    lerp: 0.1,
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,

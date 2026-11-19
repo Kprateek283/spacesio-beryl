@@ -172,7 +172,18 @@ const FoldText: React.FC<FoldTextProps> = ({
 
     const play = (repeat: boolean) => {
       killTimeline();
-      timelineRef.current = gsap.timeline({ repeat: repeat ? -1 : 0, repeatDelay: repeat ? 0.75 : 0 });
+      root.classList.remove('fold-text-done');
+      timelineRef.current = gsap.timeline({
+        repeat: repeat ? -1 : 0,
+        repeatDelay: repeat ? 0.75 : 0,
+        // Once settled, drop the 3D transforms and GPU layers on every piece.
+        onComplete: repeat
+          ? undefined
+          : () => {
+              gsap.set(pieces, { clearProps: 'transform,transformOrigin' });
+              root.classList.add('fold-text-done');
+            },
+      });
       timelineRef.current.fromTo(pieces, fromVars, toVars);
       return timelineRef.current;
     };

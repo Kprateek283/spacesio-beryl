@@ -5,8 +5,12 @@ import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const project = await getProjectBySlug(params.slug);
+  if (!project) {
+    return { title: "Project Not Found", robots: { index: false } };
+  }
   return {
-    title: project ? `${project.title} | Spacesio Beryl` : "Project Not Found",
+    title: project.title,
+    alternates: { canonical: `/projects/${params.slug}` },
   };
 }
 

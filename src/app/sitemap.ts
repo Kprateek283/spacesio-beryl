@@ -3,7 +3,7 @@ import { getProducts, getCategories } from '@/lib/api/products';
 import { getProjects } from '@/lib/api/projects';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://spacesioberyl.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.spacesioberyl.com';
 
   const [products, categories, projects] = await Promise.all([
     getProducts(),
@@ -11,11 +11,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getProjects(),
   ]);
 
-  const routes = ['', '/collection', '/projects', '/about', '/contact'].map((route) => ({
+  const routes = ['', '/collection', '/projects', '/about', '/contact', '/faq'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1 : 0.8,
+  }));
+
+  const legalRoutes = ['/privacy', '/terms'].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly' as const,
+    priority: 0.3,
   }));
 
   const categoryRoutes = categories.map((cat) => ({
@@ -39,5 +46,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...routes, ...categoryRoutes, ...productRoutes, ...projectRoutes];
+  return [...routes, ...legalRoutes, ...categoryRoutes, ...productRoutes, ...projectRoutes];
 }

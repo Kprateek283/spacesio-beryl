@@ -1,6 +1,12 @@
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import type { Metadata } from "next";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: { absolute: siteConfig.title },
+  alternates: { canonical: "/" },
+};
 
 // Dynamically import below-the-fold sections to reduce initial JS payload
 const MaterialsSection = dynamic(() => import("@/components/sections/MaterialsSection").then(mod => mod.MaterialsSection));
@@ -8,27 +14,57 @@ const MaterialsSection = dynamic(() => import("@/components/sections/MaterialsSe
 const FinalCTASection = dynamic(() => import("@/components/sections/FinalCTASection").then(mod => mod.FinalCTASection));
 
 export default function Home() {
+  const url = siteConfig.url;
+  const sameAs = Object.values(siteConfig.socialLinks).filter(
+    (link) => !link.includes("placeholder")
+  );
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
-        "@id": "https://spacesioberyl.com/#organization",
-        "name": "Spacesio Beryl",
-        "url": "https://spacesioberyl.com",
-        "logo": "https://spacesioberyl.com/assets/icons/logo.png",
-        "description": "Premium architectural surfaces, flooring, and wall coverings for luxury spaces.",
+        "@type": ["Organization", "HomeAndConstructionBusiness"],
+        "@id": `${url}/#organization`,
+        name: siteConfig.name,
+        alternateName: ["Spacesio", "SpacesioBeryl"],
+        url,
+        logo: `${url}/assets/icons/logo.png`,
+        image: `${url}/assets/images/landing/hero.jpg`,
+        description: siteConfig.description,
+        email: siteConfig.contact.email,
+        telephone: siteConfig.contact.phoneHref.replace("tel:", ""),
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: siteConfig.contact.address.street,
+          addressLocality: siteConfig.contact.address.locality,
+          addressRegion: siteConfig.contact.address.region,
+          postalCode: siteConfig.contact.address.postalCode,
+          addressCountry: siteConfig.contact.address.country,
+        },
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          telephone: siteConfig.contact.phoneHref.replace("tel:", ""),
+          email: siteConfig.contact.email,
+          areaServed: "IN",
+          availableLanguage: ["English", "Hindi"],
+        },
+        ...(sameAs.length > 0 && { sameAs }),
       },
       {
         "@type": "WebSite",
-        "@id": "https://spacesioberyl.com/#website",
-        "url": "https://spacesioberyl.com",
-        "name": "Spacesio Beryl",
-        "publisher": {
-          "@id": "https://spacesioberyl.com/#organization"
-        }
-      }
-    ]
+        "@id": `${url}/#website`,
+        url,
+        name: siteConfig.name,
+        alternateName: "Spacesio",
+        publisher: { "@id": `${url}/#organization` },
+      },
+    ],
   };
 
   return (
@@ -42,17 +78,6 @@ export default function Home() {
       {/* <VisualizerTeaserSection /> */}
       <FinalCTASection />
       
-      {/* Global Homepage Scroll Hint */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/70 text-xs tracking-widest uppercase z-50 mix-blend-difference pointer-events-none">
-        <span className="mb-3">Scroll to explore</span>
-        <Image 
-          src="/assets/icons/scrolldown.svg" 
-          alt="Scroll down" 
-          width={24} 
-          height={24} 
-          className="animate-bounce brightness-0 invert opacity-70"
-        />
-      </div>
     </>
   );
 }

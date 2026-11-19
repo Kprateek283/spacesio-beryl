@@ -4,7 +4,8 @@ import { ContactInfo } from "@/components/contact/ContactInfo";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact | Spacesio Beryl",
+  title: "Contact",
+  alternates: { canonical: "/contact" },
   description: "Tell us about your project, material requirements or space.",
 };
 
@@ -24,13 +25,13 @@ export default function ContactPage() {
 
       {/* Content */}
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 lg:gap-16 xl:gap-24">
           
-          <div className="lg:col-span-4 order-2 lg:order-1">
+          <div className="min-w-0 order-2 lg:order-1">
             <ContactInfo />
           </div>
 
-          <div className="lg:col-span-8 order-1 lg:order-2">
+          <div className="min-w-0 order-1 lg:order-2">
             <h2 className="text-sm font-medium tracking-widest uppercase text-muted-foreground border-b border-border pb-4 mb-12">
               Send an Inquiry
             </h2>
@@ -56,7 +57,7 @@ export default function ContactPage() {
           href="https://www.google.com/maps/search/?api=1&query=Chauhan+Tower,+A-25,+Vihar+Road,+Madhu+Vihar,+I.P.+Extension,+New+Delhi+110092"
           target="_blank"
           rel="noopener noreferrer"
-          className="self-start text-xs font-medium tracking-widest uppercase border-b border-transparent hover:border-foreground transition-colors"
+          className="self-start relative after:absolute after:-inset-y-3 after:inset-x-0 after:content-[''] text-xs font-medium tracking-widest uppercase border-b border-transparent hover:border-foreground transition-colors"
         >
           View on Google Maps →
         </a>
