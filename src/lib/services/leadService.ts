@@ -156,16 +156,9 @@ export const leadNotificationService = {
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
-      // TEMPORARY (until Resend is set up — see docs/SETUP.md §2):
-      // Without an API key we can't email the enquiry, so instead of failing
-      // the visitor's submission we write the full enquiry to the server log
-      // (Vercel → Project → Logs, search "[LeadService]").
-      // Once RESEND_API_KEY is set, re-enable the strict check below so a
-      // missing key is reported instead of silently logged.
-      //
-      // if (process.env.NODE_ENV === "production") {
-      //   throw new LeadDeliveryError("RESEND_API_KEY is not configured; enquiry could not be delivered.");
-      // }
+      if (process.env.NODE_ENV === "production") {
+        throw new LeadDeliveryError("RESEND_API_KEY is not configured; enquiry could not be delivered.");
+      }
       console.warn("[LeadService] RESEND_API_KEY not set — enquiry NOT emailed:\n" + internalEmail(lead).text);
       return;
     }
