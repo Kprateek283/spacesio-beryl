@@ -62,7 +62,7 @@ The logo is always black and yellow. On dark backgrounds it gets a thin white ou
 
 Flow: rate limit by IP → size check → validation (length caps on every field) → honeypot → rate limit by email → product check → email to the team (and optional confirmation to the customer) → reference ID `SPB-YYYY-NNNNN` shown to the visitor.
 
-If email delivery fails, the visitor sees an honest error with the phone number and email. Without `RESEND_API_KEY` (local development, and **temporarily in production until Resend is set up**), enquiries are written to the server log instead of emailed. See the "Temporary mode" note in SETUP.md.
+If email delivery fails, the visitor sees an honest error with the phone number and email. Without `RESEND_API_KEY` in local development, enquiries are written to the server log instead of emailed; in production a missing key is reported as a delivery error.
 
 ---
 
@@ -72,11 +72,11 @@ If email delivery fails, the visitor sees an honest error with the phone number 
 |---|---|
 | Footer form (loading / success / error states, consent note) | `src/components/layout/NewsletterForm.tsx` |
 | API endpoint | `src/app/api/newsletter/route.ts` |
-| Resend audience + welcome email | `src/lib/services/newsletterService.ts` |
+| Resend contacts + welcome email | `src/lib/services/newsletterService.ts` |
 
 Existing subscribers see "You're already on the list" rather than an error.
 
-**Currently hidden** from the footer until Resend is set up (see the "Temporary mode" note in SETUP.md).
+Shown in the footer.
 
 ---
 

@@ -16,21 +16,25 @@ describe('Newsletter API', () => {
     fetchMock = jest.fn().mockResolvedValue({ ok: true, status: 200, text: async () => '{}' });
     global.fetch = fetchMock as unknown as typeof fetch;
     process.env.RESEND_API_KEY = 're_test';
-    process.env.RESEND_AUDIENCE_ID = 'aud_123';
+    process.env.RESEND_SEGMENT_ID = 'seg_123';
     delete process.env.NEWSLETTER_SEND_WELCOME;
   });
   afterEach(() => {
     process.env = { ...originalEnv };
   });
 
-  it('adds a valid email to the Resend audience (normalised to lowercase)', async () => {
+  it('adds a valid email to Resend contacts (normalised to lowercase)', async () => {
     const res = await POST(req({ email: '  Asha@Example.COM ' }, '10.0.0.2'));
     const json = await res.json();
     expect(res.status).toBe(200);
     expect(json).toEqual({ success: true, status: 'subscribed' });
     const [url, init] = fetchMock.mock.calls[0];
-    expect(url).toBe('https://api.resend.com/audiences/aud_123/contacts');
-    expect(JSON.parse(init.body)).toEqual({ email: 'asha@example.com', unsubscribed: false });
+    expect(url).toBe('https://api.resend.com/contacts');
+    expect(JSON.parse(init.body)).toEqual({
+      email: 'asha@example.com',
+      unsubscribed: false,
+      segments: [{ id: 'seg_123' }],
+    });
   });
 
   it('rejects invalid emails with a readable message', async () => {

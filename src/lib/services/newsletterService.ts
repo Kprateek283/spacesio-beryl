@@ -1,8 +1,8 @@
 import { siteConfig } from "@/lib/site-config";
 
-// ---- Newsletter via Resend Audiences (https://resend.com/audiences) ---------
+// ---- Newsletter via Resend Contacts (https://resend.com/docs/api-reference/contacts) --
 // RESEND_API_KEY            Same key used for enquiry emails
-// RESEND_AUDIENCE_ID        ID of the audience subscribers are added to
+// RESEND_SEGMENT_ID         Optional: segment subscribers are added to
 // NEWSLETTER_SEND_WELCOME   "true" to email new subscribers a welcome note
 //                           (needs a verified sender in LEAD_FROM_EMAIL)
 
@@ -52,22 +52,23 @@ function welcomeEmail() {
 }
 
 export const newsletterService = {
-  /** Adds the email to the Resend audience. Throws NewsletterError on failure. */
+  /** Adds the email to Resend contacts. Throws NewsletterError on failure. */
   subscribe: async (email: string): Promise<SubscribeResult> => {
     const apiKey = process.env.RESEND_API_KEY;
-    const audienceId = process.env.RESEND_AUDIENCE_ID;
+    const segmentId = process.env.RESEND_SEGMENT_ID;
 
-    if (!apiKey || !audienceId) {
+    if (!apiKey) {
       if (process.env.NODE_ENV === "production") {
-        throw new NewsletterError("RESEND_API_KEY / RESEND_AUDIENCE_ID not configured.");
+        throw new NewsletterError("RESEND_API_KEY not configured.");
       }
       console.info(`[Newsletter] Resend not configured — would subscribe ${email} (dev only)`);
       return "subscribed";
     }
 
-    const res = await resend(`/audiences/${encodeURIComponent(audienceId)}/contacts`, {
+    const res = await resend("/contacts", {
       email,
       unsubscribed: false,
+      ...(segmentId && { segments: [{ id: segmentId }] }),
     });
 
     if (!res.ok) {

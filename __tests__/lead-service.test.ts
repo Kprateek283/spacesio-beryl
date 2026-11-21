@@ -54,15 +54,10 @@ describe('leadNotificationService', () => {
     await expect(leadNotificationService.notifyNewLead(lead)).rejects.toThrow(/403/);
   });
 
-  // Temporary behaviour until Resend is configured (see leadService.ts):
-  // the enquiry is logged instead of failing the visitor's submission.
-  it('logs the enquiry (and does not throw) in production when no API key is configured', async () => {
+  it('throws in production when no API key is configured', async () => {
     delete process.env.RESEND_API_KEY;
     (process.env as Record<string, string>).NODE_ENV = 'production';
-    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    await expect(leadNotificationService.notifyNewLead(lead)).resolves.toBeUndefined();
+    await expect(leadNotificationService.notifyNewLead(lead)).rejects.toThrow(/RESEND_API_KEY/);
     expect(fetchMock).not.toHaveBeenCalled();
-    expect(warn.mock.calls[0][0]).toContain('SPB-2026-00042');
-    warn.mockRestore();
   });
 });

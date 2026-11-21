@@ -17,28 +17,20 @@ Set these in **Vercel → Project → Settings → Environment Variables** (Prod
 | `LEAD_FROM_EMAIL` | **Yes** | `Spacesio Beryl <enquiries@spacesioberyl.com>` | Sender address. Must be on a domain verified in Resend |
 | `LEAD_NOTIFICATION_EMAIL` | No | `info@spacesioberyl.com` | Inbox(es) that receive enquiries, comma-separated. Defaults to the contact email in `src/lib/site-config.ts` |
 | `LEAD_SEND_CONFIRMATION` | No | `true` | Also email the customer a "we've received your enquiry" confirmation |
-| `RESEND_AUDIENCE_ID` | **Yes** (for newsletter) | `78261eea-...` | Resend audience that footer newsletter sign-ups are added to |
+| `RESEND_SEGMENT_ID` | No | `78261eea-...` | Resend segment that footer newsletter sign-ups are also added to |
 | `NEWSLETTER_SEND_WELCOME` | No | `true` | Email new subscribers a short welcome note |
 | `UPSTASH_REDIS_REST_URL` | Recommended | `https://xxx.upstash.io` | Shared store for rate limiting the enquiry and newsletter forms |
 | `UPSTASH_REDIS_REST_TOKEN` | Recommended | `AXXXX...` | Token for the above |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | `abc123...` | Only if you verify Search Console with the "HTML tag" method |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | `G-XXXXXXX` | Google Analytics 4. Loaded only after a visitor accepts analytics cookies |
 
-> **Temporary mode (Resend not set up yet):** the site deploys and works without Resend, Upstash or Search Console.
-> - **Contact form:** submissions succeed for the visitor, but are **not emailed**. Each enquiry is written to the server log instead: **Vercel → Project → Logs**, search `[LeadService]`. Vercel keeps runtime logs only for a limited time, so check them regularly.
-> - **Newsletter:** hidden from the footer.
-> - **Rate limiting:** in-memory only (works, but weaker).
->
-> **When Resend is set up, re-enable the strict behaviour:**
-> 1. In `src/lib/services/leadService.ts`, uncomment the `if (process.env.NODE_ENV === "production") { throw … }` block (marked `TEMPORARY`).
-> 2. In `src/components/layout/Footer.tsx`, uncomment the `NewsletterForm` import and the "Newsletter" column (marked `TEMPORARY`).
-> 3. In `__tests__/lead-service.test.ts`, change the "logs the enquiry" test back to expect a `RESEND_API_KEY` error.
+> **Without `RESEND_API_KEY` in production**, enquiries and newsletter sign-ups fail with an error shown to the visitor, so set it before deploying. Without Upstash, rate limiting is in-memory only (works, but weaker).
 
 ---
 
 ## 2. Resend (enquiry emails + newsletter)
 
-[Resend](https://resend.com) sends the emails. The free tier covers 3,000 emails/month; check resend.com/pricing for current audience limits.
+[Resend](https://resend.com) sends the emails. The free tier covers 3,000 emails/month; check resend.com/pricing for current contact limits.
 
 ### 2.1 Create the account and verify your domain
 1. Sign up at **resend.com**.
@@ -62,15 +54,16 @@ Spacesio Beryl <enquiries@spacesioberyl.com>
 
 The address doesn't need a real mailbox; replies go to the customer (for enquiries) or to `info@spacesioberyl.com` (for confirmations and welcome emails) via the `Reply-To` header.
 
-### 2.4 Create the newsletter audience
-1. **Audiences → Create Audience**, name it `Newsletter`.
-2. Copy its **ID** and set it as `RESEND_AUDIENCE_ID` in Vercel.
-3. To email subscribers later: **Broadcasts → Create**, choose the `Newsletter` audience. Resend adds unsubscribe links automatically.
+### 2.4 Newsletter contacts (optional segment)
+Footer sign-ups are added to **Audience → Contacts** with just `RESEND_API_KEY`; no extra setup is needed.
+1. Optional, to keep subscribers grouped: **Audience → Segments → Create segment**, name it `Newsletter`.
+2. Copy its **ID** and set it as `RESEND_SEGMENT_ID` in Vercel.
+3. To email subscribers later: **Broadcasts → Create**, choose the `Newsletter` segment (or all contacts). Resend adds unsubscribe links automatically.
 
 ### 2.5 Test it
 After redeploying:
 1. Submit the form on `/contact`. You should get an email at `LEAD_NOTIFICATION_EMAIL` with subject `New General Enquiry: <name> [SPB-2026-xxxxx]`. Hitting **Reply** answers the customer directly.
-2. Subscribe in the footer. The address should appear under **Audiences → Newsletter**.
+2. Subscribe in the footer. The address should appear under **Audience → Contacts** (and in the `Newsletter` segment if `RESEND_SEGMENT_ID` is set).
 3. If something fails, check **Resend → Logs** and **Vercel → Project → Logs** (search for `[LeadService]`, `[API Leads]` or `[Newsletter]`).
 
 ### What each email looks like
@@ -132,9 +125,9 @@ GA loads only for visitors who accept analytics cookies in the consent banner. C
 ## 6. Pre-launch checklist
 
 - [ ] `NEXT_PUBLIC_SITE_URL` set to `https://www.spacesioberyl.com`
-- [ ] Resend domain verified, `RESEND_API_KEY`, `LEAD_FROM_EMAIL`, `RESEND_AUDIENCE_ID` set
+- [ ] Resend domain verified, `RESEND_API_KEY` and `LEAD_FROM_EMAIL` set (`RESEND_SEGMENT_ID` optional)
 - [ ] Test enquiry received; reply reaches the customer
-- [ ] Test newsletter sign-up appears in the Resend audience
+- [ ] Test newsletter sign-up appears in Resend → Audience → Contacts
 - [ ] Upstash keys set
 - [ ] Search Console verified, sitemap submitted
 - [ ] WhatsApp number `+91 93184 07041` is on WhatsApp (ideally WhatsApp Business)
