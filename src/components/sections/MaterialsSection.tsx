@@ -152,7 +152,17 @@ export function MaterialsSection() {
     const preferReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (preferReducedMotion || window.innerWidth < 768) return;
 
-    const ctx = gsap.context(() => {
+    // Hide the text that this sequence reveals right away (avoids a flash),
+    // but defer building the pinned timeline until the browser is idle so its
+    // layout work doesn't block the initial page load.
+    const container = containerRef.current;
+    container?.querySelectorAll<HTMLElement>(".reveal-text-line").forEach((el) => {
+      el.style.opacity = "0";
+    });
+
+    let ctx: gsap.Context | undefined;
+    const build = () => {
+    ctx = gsap.context(() => {
       gsap.set(".blind-slat", { 
         transformOrigin: "top center",
         transformPerspective: 1000 
@@ -198,8 +208,19 @@ export function MaterialsSection() {
       }, 1);
 
     }, containerRef);
+    ScrollTrigger.refresh();
+    };
 
-    return () => ctx.revert();
+    const hasIdle = typeof window.requestIdleCallback === "function";
+    const id = hasIdle
+      ? window.requestIdleCallback(build, { timeout: 2500 })
+      : window.setTimeout(build, 600);
+
+    return () => {
+      if (hasIdle) window.cancelIdleCallback(id as number);
+      else window.clearTimeout(id as number);
+      ctx?.revert();
+    };
   }, []);
 
   return (

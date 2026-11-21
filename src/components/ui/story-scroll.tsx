@@ -57,6 +57,32 @@ const FlowArt: React.FC<FlowArtProps> = ({
 }) => {
   const containerRef = useRef<HTMLElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  // Pins/scrubs are set up only once the section is getting close to the
+  // viewport, so their layout work (ScrollTrigger.refresh) doesn't block the
+  // initial page load.
+  const [armed, setArmed] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || armed) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setArmed(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setArmed(true);
+          io.disconnect();
+        }
+      },
+      // Only when it's within half a screen: the hero is one screen tall, so a
+      // bigger margin would arm this during the initial page load.
+      { rootMargin: '50% 0px 50% 0px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [armed]);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -68,7 +94,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
 
   useGSAP(
     () => {
-      if (!containerRef.current || reducedMotion) return;
+      if (!containerRef.current || reducedMotion || !armed) return;
 
       const sections = Array.from(
         containerRef.current.querySelectorAll<HTMLElement>('[data-flow-section]'),
@@ -117,7 +143,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
         triggers.forEach((t) => t.kill());
       };
     },
-    { scope: containerRef, dependencies: [childCount(children), reducedMotion] },
+    { scope: containerRef, dependencies: [childCount(children), reducedMotion, armed] },
   );
 
   return (

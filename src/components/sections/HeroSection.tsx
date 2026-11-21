@@ -64,17 +64,22 @@ export function HeroSection() {
   const animatingRef = useRef(false);
   const goToRef = useRef<(next: number) => void>(() => {});
 
+  // Slides 2-5 mount only after the first photo has loaded AND the browser is
+  // idle, so they never compete with it for bandwidth or CPU (LCP). If a
+  // visitor changes slide before then, goTo mounts them on demand and waits
+  // for the photo to be ready.
   useEffect(() => {
+    if (!heroLoaded) return;
     const hasIdleCallback = typeof window.requestIdleCallback === "function";
     const idleId = hasIdleCallback
-      ? window.requestIdleCallback(() => setMountedCount(slides.length), { timeout: 1500 })
+      ? window.requestIdleCallback(() => setMountedCount(slides.length), { timeout: 600 })
       : window.setTimeout(() => setMountedCount(slides.length), 300);
 
     return () => {
       if (hasIdleCallback) window.cancelIdleCallback(idleId as number);
       else window.clearTimeout(idleId as number);
     };
-  }, []);
+  }, [heroLoaded]);
 
   // Remove the loader from the DOM once it has faded out, so its infinite
   // CSS animations stop running.
@@ -326,7 +331,6 @@ export function HeroSection() {
             alt={slide.titleLines.join(' ')}
             fill
             priority={idx === 0}
-            loading={idx === 0 ? undefined : "eager"}
             quality={65}
             className="hero-bg-image object-cover object-center [will-change:opacity,transform] [backface-visibility:hidden]"
             style={{ opacity: idx === 0 ? 1 : 0, zIndex: idx === 0 ? 1 : 0 }}
